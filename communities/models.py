@@ -1,8 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-from users.models import User
 from categories.models import Category
-
 
 class Community(models.Model):
     class Status(models.TextChoices):
@@ -11,7 +9,7 @@ class Community(models.Model):
 
     UNLIMITED = None 
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='communities', null=True)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='communities', null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='communities', null=True)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=255, null=True)
