@@ -4,11 +4,20 @@ from rest_framework import status
 from .models import Role
 from .serializers import RoleSerializer
 
+# @api_view(['GET'])
+# def get_roles(request):
+#     roles = Role.objects.all()
+#     serializedData = RoleSerializer(roles, many=True).data
+#     return Response(serializedData)
+
 @api_view(['GET'])
 def get_roles(request):
-    roles = Role.objects.all()
-    serializedData = RoleSerializer(roles, many=True).data
-    return Response(serializedData)
+    community = request.query_params.get('community')  
+    if not community:
+        return Response({"error": "community_id nya tidak masuk"}, status=status.HTTP_400_BAD_REQUEST)
+    roles = Role.objects.filter(community=community) 
+    serializerData = RoleSerializer(roles, many=True).data
+    return Response(serializerData, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def create_roles(request):

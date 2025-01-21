@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'likes',
     'comments',
     'bookmarks',
+    'notifications',
 ]
 
 MIDDLEWARE = [

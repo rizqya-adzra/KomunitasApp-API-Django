@@ -17,7 +17,18 @@ def create_communities(request):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    detailed_errors = {}
+    for field, errors in serializer.errors.items():
+        detailed_errors[field] = ", ".join(errors)
+    
+    return Response(
+        {
+            "message": "Data tidak valid.",
+            "errors": detailed_errors
+        },
+        status=status.HTTP_400_BAD_REQUEST
+    )
 
 @api_view(['PUT', 'DELETE'])
 def community_detail(request, pk):
