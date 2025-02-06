@@ -1,6 +1,9 @@
 from django.db import models
+
+# Create your models here.
+from django.db import models
 from communities.models import Community
-from users.models import User
+# from users.models import User
 from django.core.exceptions import ValidationError
 from django.utils.timezone import now
 
@@ -24,8 +27,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 
-    def clean(self):
-        if self.schedule and self.schedule <= now():
-            raise ValidationError("Waktu schedule harus lebih dari waktu sekarang.")
+    # def clean(self):
+    #     if self.schedule and self.schedule <= now():
+    #         raise ValidationError("Waktu schedule harus lebih dari waktu sekarang.")
 
     

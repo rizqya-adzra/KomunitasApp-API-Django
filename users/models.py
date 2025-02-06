@@ -16,7 +16,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 class User(AbstractBaseUser):
-    name = models.CharField(max_length=50)
+    username = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, unique=True)
     password = models.CharField(max_length=255)
     last_login = models.DateTimeField(null=True, blank=True)
@@ -28,7 +28,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name']
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return self.email

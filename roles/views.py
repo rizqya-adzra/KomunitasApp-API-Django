@@ -12,10 +12,10 @@ from .serializers import RoleSerializer
 
 @api_view(['GET'])
 def get_roles(request):
-    community = request.query_params.get('community')  
-    if not community:
-        return Response({"error": "community_id nya tidak masuk"}, status=status.HTTP_400_BAD_REQUEST)
-    roles = Role.objects.filter(community=community) 
+    # community = request.query_params.get('community')  
+    # if not community:
+    #     return Response({"error": "community_id nya tidak masuk"}, status=status.HTTP_400_BAD_REQUEST)
+    roles = Role.objects.all() 
     serializerData = RoleSerializer(roles, many=True).data
     return Response(serializerData, status=status.HTTP_200_OK)
 

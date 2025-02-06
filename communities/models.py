@@ -26,12 +26,3 @@ class Community(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.description or 'No description'}"
-
-    def clean(self):
-        if self.max_members is not None and self.members > self.max_members:
-            raise ValidationError(
-                f"Jumlah member ({self.members}), dan sudah mencapai batas maksimum ({self.max_members})."
-            )
-        
-    def is_unlimited(self):
-        return self.max_members is None

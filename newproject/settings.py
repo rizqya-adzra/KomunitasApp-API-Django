@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'comments',
     'bookmarks',
     'notifications',
+    'chats'
 ]
 
 MIDDLEWARE = [
@@ -88,7 +89,7 @@ WSGI_APPLICATION = 'newproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_komunitas', 
+        'NAME': 'django_komunitas_db', 
         'USER': 'root',          
         'PASSWORD': '',          
         'HOST': 'localhost',     

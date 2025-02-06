@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.shortcuts import get_object_or_404
 from .models import Community
 from .serializers import CommunitySerializer
 
@@ -47,4 +48,27 @@ def community_detail(request, pk):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['GET'])
+def get_community_by_id(request, pk):
+    try:
+        community = Community.objects.get(pk=pk)
+        serializer = CommunitySerializer(community)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Community.DoesNotExist:
+        return Response(
+            {"error": "Komunitas tidak ditemukan."},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    
+@api_view(['DELETE'])
+def delete_image(request, pk):
+    instance = get_object_or_404(Community, pk=pk)
 
+    if instance.image:
+        instance.image.delete(save=False)  
+        instance.image = None  
+        instance.save()  
+        return Response({"message": "Gambar Anda berhasil dihapus"}, status=status.HTTP_204_NO_CONTENT)
+
+    return Response({"error": "Tidak ada gambar yang ditemukan"}, status=status.HTTP_400_BAD_REQUEST)

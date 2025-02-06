@@ -4,9 +4,12 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from django.utils.timezone import now
 from .models import User
+
+# from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
   
 # @api_view(['POST'])
@@ -102,6 +105,44 @@ def user_detail(request, pk):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+# @api_view(['GET'])
+# def get_user_by_id(request, pk):
+#     user = get_object_or_404(User, pk=pk)
+#     serializer = UserSerializer(user)
+#     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_by_id(request):
+    user = request.user
+    serializer = UserSerializer(user)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+# @api_view(['POST'])
+# def custom_auth_token(request):
+#     email = request.data.get('email')
+#     password = request.data.get('password')
+
+#     if not email or not password:
+#         return Response({'error': 'Email and password are required'}, status=400)
+
+#     try:
+#         User = get_user_model()
+#         user = User.objects.get(email=email)
+
+#         if not check_password(password, user.password):
+#             return Response({'non_field_errors': ['Unable to log in with provided credentials.']}, status=400)
+
+#         token, created = Token.objects.get_or_create(user=user)
+
+#         return Response({
+#             'token': token.key,
+#             'user_id': user.id,
+#             'email': user.email,
+#             'name': user.username,
+#         })
+#     except User.DoesNotExist:
+#         return Response({'non_field_errors': ['Unable to log in with provided credentials.']}, status=400)
 
 

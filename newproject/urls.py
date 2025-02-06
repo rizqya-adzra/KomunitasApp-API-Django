@@ -29,6 +29,8 @@ urlpatterns = [
     path('api/', include('likes.urls')),
     path('api/', include('comments.urls')),
     path('api/', include('bookmarks.urls')),
+    path('api/', include('notifications.urls')),
+    path('api/', include('chats.urls')),
 ]
 
 if settings.DEBUG:
