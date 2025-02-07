@@ -21,11 +21,6 @@ def get_roles(request):
 
 @api_view(['POST'])
 def create_roles(request):
-    user = request.data.get('user')
-
-    if Role.objects.filter(user=user).exists():
-        return Response({"error": "User sudah mempunyai role"}, status=status.HTTP_400_BAD_REQUEST)
-
     data = request.data
     serializer = RoleSerializer(data=data)
     

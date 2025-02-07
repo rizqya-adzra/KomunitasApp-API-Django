@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+# from communities.models import Community
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -16,12 +17,21 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 class User(AbstractBaseUser):
+    class Status(models.TextChoices):
+        ADMIN = 'ADMIN'
+        MEMBER = 'MEMBER'
+
+    # community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='users', null=False)
     username = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, unique=True)
     password = models.CharField(max_length=255)
     last_login = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    # role = models.CharField(
+    #     max_length=6,
+    #     choices=Status.choices,
+    # )
 
     is_active = models.BooleanField(default=True)
 
