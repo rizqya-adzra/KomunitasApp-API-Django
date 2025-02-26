@@ -26,10 +26,10 @@ urlpatterns = [
     path('api/', include('categories.urls')),
     path('api/', include('roles.urls')),
     path('api/', include('posts.urls')),
-    path('api/', include('likes.urls')),
-    path('api/', include('comments.urls')),
-    path('api/', include('bookmarks.urls')),
-    path('api/', include('notifications.urls')),
+    # path('api/', include('likes.urls')),
+    # path('api/', include('comments.urls')),
+    # path('api/', include('bookmarks.urls')),
+    # path('api/', include('notifications.urls')),
     path('api/', include('chats.urls')),
 ]
 

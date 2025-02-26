@@ -44,10 +44,6 @@ INSTALLED_APPS = [
     'categories',
     'roles', 
     'posts',
-    'likes',
-    'comments',
-    'bookmarks',
-    'notifications',
     'chats'
 ]
 
@@ -89,7 +85,7 @@ WSGI_APPLICATION = 'newproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_komunitas_db', 
+        'NAME': 'django_komunitas_app_db', 
         'USER': 'root',          
         'PASSWORD': '',          
         'HOST': 'localhost',     

@@ -89,18 +89,22 @@ def get_users(request):
     return Response(serializedData)
 
 @api_view(['PUT', 'DELETE'])
+@permission_classes([IsAuthenticated]) 
 def user_detail(request, pk):
     try:
         user = User.objects.get(pk=pk)
     except User.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
     if request.method == 'DELETE':
-        user.delete() 
+        user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     elif request.method == 'PUT':
-        data = request.data
-        serializer = UserSerializer(user, data=data)
+        data = request.data.copy()
+        if 'password' in data:
+            data['password'] = make_password(data['password'])
+
+        serializer = UserSerializer(user, data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
