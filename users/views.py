@@ -83,6 +83,7 @@ def user_logout(request):
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated]) 
 def get_users(request):
     users = User.objects.all()
     serializedData = UserSerializer(users, many=True).data
