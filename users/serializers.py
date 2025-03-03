@@ -9,14 +9,11 @@ class RoleSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     role_detail = serializers.SerializerMethodField()  
-    
+
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'role_detail', 'bio', 'profile_photo', 'created_at']  
 
     def get_role_detail(self, obj):
-        try:
-            role = Role.objects.get(user=obj) 
-            return RoleSerializer(role).data  
-        except Role.DoesNotExist:
-            return None 
+        roles = Role.objects.filter(user=obj)  
+        return RoleSerializer(roles, many=True).data 

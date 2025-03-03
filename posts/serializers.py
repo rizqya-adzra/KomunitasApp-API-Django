@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 class CommunitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Community
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'image']
 
 class PostSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), write_only=True)
